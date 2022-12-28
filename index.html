@@ -18,6 +18,15 @@
     <div class="g-signin2" data-onsuccess="handleCredentialResponse"></div>
 </body>
 <script>
+
+var xhr = new XMLHttpRequest();
+xhr.open('GET',
+    'test.html' +
+    'access_token=' + params['access_token']);
+xhr.onreadystatechange = function (e) {
+  console.log(xhr.response);
+};
+xhr.send(null);
     // Example 1: Use method-specific function
 var request = gapi.client.drive.about.get({'fields': 'user'});
 
