@@ -15,6 +15,25 @@
     <div class="g-signin2" data-onsuccess="handleCredentialResponse"></div>
 </body>
 <script>
+    // Example 1: Use method-specific function
+var request = gapi.client.drive.about.get({'fields': 'user'});
+
+// Execute the API request.
+request.execute(function(response) {
+  console.log(response);
+});
+
+
+// Example 2: Use gapi.client.request(args) function
+var request = gapi.client.request({
+  'method': 'GET',
+  'path': '/drive/v3/about',
+  'params': {'fields': 'user'}
+});
+// Execute the API request.
+request.execute(function(response) {
+  console.log(response);
+});
     var GoogleAuth;
     var SCOPE = 'https://www.googleapis.com/auth/drive.metadata.readonly';
     function handleClientLoad() {
@@ -102,6 +121,17 @@
   <script async defer src="https://apis.google.com/js/api.js"
           onload="this.onload=function(){};handleClientLoad()"
           onreadystatechange="if (this.readyState === 'complete') this.onload()">
+
+
+// Space-separated list of additional scope(s) you are requesting access to.
+// This code adds read-only access to the user's calendars via the Calendar API.
+var NEW_SCOPES = 'https://www.googleapis.com/auth/calendar.readonly';
+
+// Retrieve the GoogleUser object for the current user.
+var GoogleUser = GoogleAuth.currentUser.get();
+GoogleUser.grant({'scope': NEW_SCOPES});
+
+GoogleAuth.disconnect();
   </script>
 
 
