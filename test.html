@@ -1,12 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-signin-client_id" content="405183411013-7lasmgejr50nbrobs355vmaofv2q9dve.apps.googleusercontent.com">
+    <title>Document</title>
+    <link rel="" href="https://console.developers.google.com/apis/credentials/consent?project=ticket-system-373016">
+
+    
 </head>
 <body>
-  <h1>Test pass</h1>
-</body>
+    <div id="github-login-container"></div>
+    <a id="github-login-button" href="https://github.com/login/oauth/authorize?client_id=25c4742bdb12f3d85a90">Log in with GitHub</a>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <div class="g-signin2" data-onsuccess="handleCredentialResponse"></div>
+    <div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v15.0&appId=534358181941680&autoLogAppEvents=1" nonce="DnPM4ejE"></script>
+<div class="fb-login-button" data-width="" data-size="large" data-button-type="continue_with" data-layout="default" data-auto-logout-link="false" data-use-continue-as="false"></div>
+ <h1> Test pass</h1>
+
+
 </html>
