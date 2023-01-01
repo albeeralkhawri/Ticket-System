@@ -18,12 +18,15 @@
     <div id="fb-root"></div>
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v15.0&appId=534358181941680&autoLogAppEvents=1" nonce="DnPM4ejE"></script>
 <script>
-  FB.getLoginStatus(function(response) {
-  if (response.status === 'connected') {
-    var accessToken = response.authResponse.accessToken;
-  } 
-} );
-</script>
+  FB.api(
+ '/me',
+ 'GET',
+ {"fields":"id,name"},
+ function(response) {
+     // Insert your code here
+ }
+);
+ </script>
 <div class="fb-login-button" data-width="" data-size="large" data-button-type="continue_with" data-layout="default" data-auto-logout-link="false" data-use-continue-as="false"></div>
  <h1> Test pass 2</h1>
 
