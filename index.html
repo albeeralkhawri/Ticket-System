@@ -34,6 +34,9 @@
        js.src = "https://connect.facebook.net/en_US/sdk.js";
        fjs.parentNode.insertBefore(js, fjs);
      }(document, 'script', 'facebook-jssdk'));
+
+
+     
 </script>
 <div
   class="fb-like"
@@ -44,5 +47,7 @@
 <div class="fb-login-button" data-width="" data-size="large" data-button-type="continue_with" data-layout="default" data-auto-logout-link="false" data-use-continue-as="false"></div>
 
 
+<a href="#" onclick="FB.logout();">Log out of Facebook</a>
+<button onclick="FB.logout();">Log out of Facebook</button>
 
 </html>

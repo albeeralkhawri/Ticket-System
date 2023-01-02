@@ -44,11 +44,32 @@
     console.log('Welcome!  Fetching your information.... ');
     FB.api('/me', function(response) {
       console.log('Successful login for: ' + response.name);
-      window.location.href="test2.html";
+      window.location.href="index.html";
       document.getElementById('status').innerHTML =
         'Thanks for logging in, ' + response.name + '!';
     });
   }
+
+  FB.getLoginStatus(function(response) {
+    if (response.status === 'connected') {
+      // the user is logged in and has authenticated your app
+      // you can use the access token to call the Facebook API
+    } else {
+      // the user is not logged in or has not authenticated your app
+    }
+  });
+
+(function(d, s, id){
+   var js, fjs = d.getElementsByTagName(s)[0];
+   if (d.getElementById(id)) {return;}
+   js = d.createElement(s); js.id = id;
+   js.src = "https://connect.facebook.net/en_US/sdk.js";
+   fjs.parentNode.insertBefore(js, fjs);
+ }(document, 'script', 'facebook-jssdk'));
+
+ FB.logout(function(response) {
+  // user is now logged out
+});
 
 </script>
 
@@ -60,6 +81,10 @@
 
 <div id="status">
 </div>
+
+<a href="#" onclick="FB.logout();">Log out of Facebook</a>
+<button onclick="FB.logout();">Log out of Facebook</button>
+
 
 <!-- Load the JS SDK asynchronously -->
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
