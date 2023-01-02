@@ -1,43 +1,66 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="google-signin-client_id" content="405183411013-7lasmgejr50nbrobs355vmaofv2q9dve.apps.googleusercontent.com">
-    <title>Document</title>
-    <link rel="" href="https://console.developers.google.com/apis/credentials/consent?project=ticket-system-373016">
-
-    
+<title>Facebook Login JavaScript Example</title>
+<meta charset="UTF-8">
 </head>
 <body>
-    <div id="github-login-container"></div>
-    <a id="github-login-button" href="https://github.com/login/oauth/authorize?client_id=25c4742bdb12f3d85a90">Log in with GitHub</a>
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <div class="g-signin2" data-onsuccess="handleCredentialResponse"></div>
-    <div id="fb-root"></div>
-<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v15.0&appId=534358181941680&autoLogAppEvents=1" nonce="DnPM4ejE"></script>
 <script>
+
+  function statusChangeCallback(response) {  // Called with the results from FB.getLoginStatus().
+    console.log('statusChangeCallback');
+    console.log(response);                   // The current login status of the person.
+    if (response.status === 'connected') {   // Logged into your webpage and Facebook.
+      testAPI();  
+    } else {                                 // Not logged into your webpage or we are unable to tell.
+      document.getElementById('status').innerHTML = 'Please log ' +
+        'into this webpage.';
+    }
+  }
+
+
+  function checkLoginState() {               // Called when a person is finished with the Login Button.
+    FB.getLoginStatus(function(response) {   // See the onlogin handler
+      statusChangeCallback(response);
+    });
+  }
+
+
   window.fbAsyncInit = function() {
     FB.init({
-      appId      : '534358181941680',
-      xfbml      : true,
-      version    : 'v15.0'
+      appId      : '{534358181941680}',
+      cookie     : true,                     // Enable cookies to allow the server to access the session.
+      xfbml      : true,                     // Parse social plugins on this webpage.
+      version    : '{v15.0}'           // Use this Graph API version for this call.
     });
-    FB.AppEvents.logPageView();
+
+
+    FB.getLoginStatus(function(response) {   // Called after the JS SDK has been initialized.
+      statusChangeCallback(response);        // Returns the login status.
+    });
   };
+ 
+  function testAPI() {                      // Testing Graph API after login.  See statusChangeCallback() for when this call is made.
+    console.log('Welcome!  Fetching your information.... ');
+    FB.api('/me', function(response) {
+      console.log('Successful login for: ' + response.name);
+      document.getElementById('status').innerHTML =
+        'Thanks for logging in, ' + response.name + '!';
+    });
+  }
 
-  (function(d, s, id){
-     var js, fjs = d.getElementsByTagName(s)[0];
-     if (d.getElementById(id)) {return;}
-     js = d.createElement(s); js.id = id;
-     js.src = "https://connect.facebook.net/en_US/sdk.js";
-     fjs.parentNode.insertBefore(js, fjs);
-   }(document, 'script', 'facebook-jssdk'));
-
- </script>
-<div class="fb-login-button" data-width="" data-size="large" data-button-type="continue_with" data-layout="default" data-auto-logout-link="false" data-use-continue-as="false"></div>
- <h1> Test pass 2</h1>
+</script>
 
 
+<!-- The JS SDK Login Button -->
+
+<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+</fb:login-button>
+
+<div id="status">
+</div>
+
+<!-- Load the JS SDK asynchronously -->
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+</body>
 </html>
