@@ -54,6 +54,9 @@
     if (response.status === 'connected') {
       // the user is logged in and has authenticated your app
       // you can use the access token to call the Facebook API
+      FB.logout(function(response) {
+      // user is now logged out
+    });
     } else {
       // the user is not logged in or has not authenticated your app
     }
@@ -66,10 +69,6 @@
    js.src = "https://connect.facebook.net/en_US/sdk.js";
    fjs.parentNode.insertBefore(js, fjs);
  }(document, 'script', 'facebook-jssdk'));
-
- FB.logout(function(response) {
-  // user is now logged out
-});
 
 </script>
 
