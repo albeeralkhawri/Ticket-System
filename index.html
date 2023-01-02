@@ -43,6 +43,20 @@
       });
       FB.AppEvents.logPageView();
     };
+
+    FB.getLoginStatus(function(response) {
+  if (response.status === 'connected') {
+    // the user is logged in and has authorized your app
+    // you can use the access token obtained from the response
+    var accessToken = response.authResponse.accessToken;
+    FB.api('/me', {access_token: accessToken}, function(response) {
+      // handle the response
+    });
+  } else {
+    // the user is not logged in or has not authorized your app
+    // you should not make API calls without an access token
+  }
+});
   
     (function(d, s, id){
        var js, fjs = d.getElementsByTagName(s)[0];
@@ -62,7 +76,7 @@
   data-show-faces="true">
 </div>
 <div class="fb-login-button" data-width="" data-size="large" data-button-type="continue_with" data-layout="default" data-auto-logout-link="false" data-use-continue-as="false"></div>
-
+<h1> test 10</h1>
 
 <a href="#" onclick="FB.logout();">Log out of Facebook</a>
 <button onclick="FB.logout();">Log out of Facebook</button>
