@@ -3,6 +3,27 @@
 <head>
 <title>Facebook Login JavaScript Example</title>
 <meta charset="UTF-8">
+
+<!-- Initialize the Facebook JavaScript SDK -->
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '534358181941680',
+      cookie     : true,
+      xfbml      : true,
+      version    : 'v15.0'
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "https://connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
+
 </head>
 <body>
 <script>
@@ -41,7 +62,8 @@
     FB.api('/me', function(response) {
       console.log('Successful login for: ' + response.name);
       window.location.href="index.html";
-      document.getElementById('status').innerHTML =
+      document.getElementById('status').inner
+	  HTML =
         'Thanks for logging in, ' + response.name + '!';
     });
   }
@@ -59,4 +81,6 @@
 </div>
 
 <!-- Load the JS SDK asynchronously -->
-<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+</body>
+</html>
