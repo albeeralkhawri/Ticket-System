@@ -1,158 +1,62 @@
+<!DOCTYPE html>
 <html>
 <head>
-	<title>js 登入 測試</title>
+<title>Facebook Login JavaScript Example</title>
+<meta charset="UTF-8">
 </head>
 <body>
 <script>
+  function statusChangeCallback(response) {  // Called with the results from FB.getLoginStatus().
+    console.log('statusChangeCallback');
+    console.log(response);                   // The current login status of the person.
+    if (response.status === 'connected') {   // Logged into your webpage and Facebook.
+      testAPI();  
+    } else {                                 // Not logged into your webpage or we are unable to tell.
+      document.getElementById('status').innerHTML = 'Please log ' +
+        'into this webpage.';
+    }
+  }
+
+  function checkLoginState() {               // Called when a person is finished with the Login Button.
+    FB.getLoginStatus(function(response) {   // See the onlogin handler
+      statusChangeCallback(response);
+    });
+  }
+
   window.fbAsyncInit = function() {
     FB.init({
       appId      : '534358181941680',
-      xfbml      : true,
-      version    : 'v15.0'
+      cookie     : true,                     // Enable cookies to allow the server to access the session.
+      xfbml      : true,                     // Parse social plugins on this webpage.
+      version    : 'v15.0'          // Use this Graph API version for this call.
     });
 
-  };//end of fbAsyncInit
+    FB.getLoginStatus(function(response) {   // Called after the JS SDK has been initialized.
+      statusChangeCallback(response);        // Returns the login status.
+    });
+  };
 
-
-
-	(function(d, s, id){
-     var js, fjs = d.getElementsByTagName(s)[0];
-     if (d.getElementById(id)) {return;}
-     js = d.createElement(s); js.id = id;
-     js.src = "//connect.facebook.net/zh_TW/sdk.js";
-     fjs.parentNode.insertBefore(js, fjs);
-	}(document, 'script', 'facebook-jssdk'));
-
-	function hello(){
-		FB.getLoginStatus(function(response) {
-			if (response.status === 'connected') {
-				alert("hello");
-			}
-		});
-	}
-
-	function logout(){
-		FB.logout();
-		alert("facebook logout");
-	}
-
-	function login(){
-		FB.login(function(response) {
-		    if (response.authResponse) {
-			     console.log('Welcome! Fetching your information.... ');
-			     FB.api('/me', function(response) {
-			       console.log(response);
-			       console.log('Good to see you, ' + response.name + '.');
-			       console.log('Your user_id , ' + response.id);
-			     });
-			     
-		    }else{
-		     	console.log('User cancelled login or did not fully authorize.');
-		     	
-		    }
-		} , {scope: 'publish_actions'});		
-	}
-
-	//取得使用者大頭貼
-	function get_user_picture(){
-
-		FB.getLoginStatus(function(response) {
-			console.log(response.status);
-		  if (response.status === 'connected') {
-		  	
-		  	FB.api('/me/picture?type=large' , function(response2) {
-		       		console.log(response2.data.url);
-			});
-		    
-		  } else if (response.status === 'not_authorized') {
-		    // the user is logged in to Facebook, 
-		    // but has not authenticated your app
-		  } else {
-		    FB.login(function(response) {});
-		  }
-		});
-	}
-
-	//發佈到facebook 個人塗鴉牆
-	function publish_actions(){
-		//publish_actions
-
-		FB.getLoginStatus(function(response) {
-			if (response.status === 'connected') {
-				 var accessToken = response.authResponse.accessToken;
-				 	FB.api(
-					    "/me/feed",
-					    "POST",
-					    {
-					        "message": "This is a test message" ,
-					        "link" : "your_link" ,
-					        "picture" : "picture_url" ,
-					        "access_token" : accessToken
-					    },
-					    function (response) {
-					      if (response && !response.error) {
-					        /* handle the result */
-					        console.log(response);
-					      }else{
-					      	console.log(response);
-					      }
-					    }
-					);
-			} else if (response.status === 'not_authorized') {
-			    // the user is logged in to Facebook, 
-			    // but has not authenticated your app
-			} else {
-			    // the user isn't logged in to Facebook.
-			    FB.login(function(response) {});
-			}
-		});
-		
-		
-	}
-/*
-想要在使用者進入網頁就把基本資料帶進去表單內的話 , 
-必須等到網頁載入結束後再判斷,否則導致 FB is not defined 情況發生.
-*/
-window.onload = function(){
-	FB.getLoginStatus(function(response) {
-	  if (response.status === 'connected') {	    
-	    FB.api('/me?fields=name,email', function(response) {
-	       //console.log(response);
-	       document.getElementById("user_name").value = response.name;
-	       document.getElementById("user_email").value = response.email;			       
-		});
-	    
-	  }else if(response.status === 'not_authorized'){
-	  	console.log('Not authorized');	    
-	  }else{ console.log('Not logged in'); }
-
- 	});
-}
-
-
-
+  function testAPI() {                      // Testing Graph API after login.  See statusChangeCallback() for when this call is made.
+    console.log('Welcome!  Fetching your information.... ');
+    FB.api('/me', function(response) {
+      console.log('Successful login for: ' + response.name);
+      window.location.href="index.html";
+      document.getElementById('status').innerHTML =
+        'Thanks for logging in, ' + response.name + '!';
+    });
+  }
 </script>
 
-<br><br>
-<div class="fb-login-button" data-max-rows="1" data-size="medium" data-show-faces="false"  onlogin="hello" data-auto-logout-link="true"></div>
-<br><br>
-<button id="fb_logout" onclick="logout()" >facebook logout</button>
-<br><br>
-<button id="fb_login" onclick="login()" >facebook login</button>
-<br><br>
-<button id="get_user_picture" onclick="get_user_picture()" > get user picture </button>
-<br><br>
+<!-- The JS SDK Login Button -->
 
-<button id="publish_actions" onclick="publish_actions()" >publich on your facebook </button>
+<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+</fb:login-button>
 
-<!-- 
-see more
-https://developers.facebook.com/docs/facebook-login/web/login-button 
-https://developers.facebook.com/docs/reference/javascript/FB.login/v2.6
-https://developers.facebook.com/docs/graph-api/reference
-https://developers.facebook.com/docs/graph-api/reference/v2.6/post/
--->
+<!-- The Logout Button -->
+<button onclick="FB.logout();">Log out of Facebook</button>
 
+<div id="status">
+</div>
 
-</body>
-</html>
+<!-- Load the JS SDK asynchronously -->
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script
