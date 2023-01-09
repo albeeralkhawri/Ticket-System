@@ -33,6 +33,12 @@
   <!--  <script src="https://apis.google.com/js/platform.js" async defer></script>
     <div class="g-signin2" data-onsuccess="handleCredentialResponse"></div>-->
     <div id="fb-root"></div>
+    <button onclick="FB.logout();">Log out of Facebook test</button>
+
+<div id="status">
+</div>
+<h1>Welcome, {username}!</h1>
+<!-- Load the JS SDK asynchronously -->
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v15.0&appId=534358181941680&autoLogAppEvents=1" nonce="DnPM4ejE"></script>
 <script>
     window.fbAsyncInit = function() {
@@ -66,7 +72,47 @@
        fjs.parentNode.insertBefore(js, fjs);
      }(document, 'script', 'facebook-jssdk'));
 
+     <!-- The Logout Button -->
 
+const querystring = require('querystring');
+const https = require('https');
+
+const code = req.query.code;
+
+const data = querystring.stringify({
+  client_id: '25c4742bdb12f3d85a90',
+  client_secret: '2d03bac0b07eccf627b23271c0eec4fb4d1515ef',
+  code: code
+});
+
+const options = {
+  hostname: 'github.com',
+  port: 443,
+  path: '/login/oauth/access_token',
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/x-www-form-urlencoded',
+    'Content-Length': data.length
+  }
+};
+
+const request = https.request(options, response => {
+  let body = '';
+  response.on('data', chunk => {
+    body += chunk;
+  });
+  response.on('end', () => {
+    const accessToken = querystring.parse(body).access_token;
+    // You can now use the access token to make API calls
+  });
+});
+
+request.on('error', error => {
+  console.error(error);
+});
+
+request.write(data);
+request.end();
      
 </script>
 <div
