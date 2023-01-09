@@ -61,7 +61,7 @@
     console.log('Welcome!  Fetching your information.... ');
     FB.api('/me', function(response) {
       console.log('Successful login for: ' + response.name);
-      window.location.href="test.html";
+      // window.location.href="test.html";
       document.getElementById('status').inner
 	  HTML =
         'Thanks for logging in, ' + response.name + '!';
@@ -89,8 +89,8 @@ const https = require('https');
 const code = req.query.code;
 
 const data = querystring.stringify({
-  client_id: 'YOUR_CLIENT_ID',
-  client_secret: 'YOUR_CLIENT_SECRET',
+  client_id: '25c4742bdb12f3d85a90',
+  client_secret: '2d03bac0b07eccf627b23271c0eec4fb4d1515ef',
   code: code
 });
 
